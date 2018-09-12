@@ -1,0 +1,73 @@
+﻿https://blog.csdn.net/free_wind22/article/details/50967723
+
+名词解释:
+(1)、工作区：就是你在电脑上看到的目录，比如目录下testgit里的文件(.git隐藏目录版本库除外)。或者以后需要再新建的目录文件等等都属于工作区范畴。
+(2)、版本库(Repository)：工作区有一个隐藏目录.git,这个不属于工作区，这是版本库。其中版本库里面存了很多东西，其中最重要的就是stage(暂存区)，还有Git为我们自动创建了第一个分支master,以及指向master的一个指针HEAD。
+前面说过使用Git提交文件到版本库有两步：
+step1:是使用 git add 把文件添加进去，实际上就是把文件添加到暂存区。
+step2:使用git commit提交更改，实际上就是把暂存区的所有内容提交到当前分支上。
+
+一、本次仓库
+1、安装git msysgit
+
+2、开始->程序->Git->Git Bash打开git命令窗口
+
+3、创建Git仓库表示
+git config --global user.name "chad_yin"
+git config --global user.email "2834674610@qq.com"
+
+4、创建版本库
+(1)、切换到指定目录: cd D:  | cd www | mkdire testgit | git init(把该目录变成可管理的仓库)
+(2)、在testgit目录下创建文件readme.txt,编写内容
+(3)、存到暂存区： git add [readme.txt]
+(4)、将文件提交到仓库: git commit -m ["提交注释"]
+(5)、查看是否有文件未提交: git status
+
+5、版本回退
+(1)、查看历史修改记录: git log || git log --pretty=online
+(2)、回退到上个版本： git reset --hard HEAD^; 回退到上上个版本: git reset --hard HEAD^^; 回退到前100个版本: git reset --hard HEAD~100; | git log
+(3)、回退后再次恢复: git reflog | git reset --hard 版本号
+
+
+6、撤销修改
+方法一:如果我知道要删掉那些内容的话，直接手动更改去掉那些需要的文件，然后add添加到暂存区，最后commit掉。
+方法二:恢复到上一个版本。使用 git reset  --hard HEAD^
+方法三:git checkout -- [file(readme.txt)];
+  说明:[
+    把file(readme.txt)文件在工作区做的修改全部撤销，包含以下两种情况:
+    (1)、file(readme.txt)自动修改后，还没有放到暂存区，使用 撤销修改就回到和版本库一模一样的状态
+    (2)、已经放入暂存区了，接着又作了修改，撤销修改就回到添加暂存区后的状态
+  ]
+  (注意：命令git checkout -- [readme.txt] 中的 -- 很重要，如果没有 -- 的话，那么命令变成创建分支了。)
+
+
+7、删除文件
+(1)、rm file |  git commit
+(2)、如果删除后没有commit需要恢复的话执行命令:git checkout -- file
+
+二、添加远程库到github
+1、本地项目已存在，将本地仓库关联到远程仓库:
+(1)、登录github，创建资源库;(https://github.com 账号:yinchao1)
+(2)、将本地仓库与远程仓库关联: git remote add origin https://github.com/yinchao1/icms.git
+(3)、将本地仓库的内容推送到远程，实际上是将当前主分支推送到远程: git push -u origin master 
+(4)、本地作了提交执行命令: git push origin master
+
+2、从远程仓库克隆
+git clone https://github.com/yinchao1/icms
+
+
+三、创建与合并分支
+1、创建并切换分支dev: git checkout -b dev (相当于git branch dev | git checkout dev)
+2、查看当前分支: git branch
+3、修改分支内容后提交: git checkout dev | git add readme.txt | git commit -m "dev分支上文件内容修改"
+4、合并到主分支: git checkout master | git merge dev (Fast-Fowrard模式，删除分支后会丢掉分支信息,保留分支信息: git merge --no-ff -m "合并分支并保留分支信息" dev)
+5、删除新建分支: git branch -d dev
+
+四、创建临时分支
+当某个分支尚未完成无法提交时，此时又需要创建一个临时分支完成临时修改，则可以通过隐藏工作分支来进行:
+1、查看当前状态: git status
+2、隐藏工作现场: git stash | git status
+3、在master分支上创建临时分支: git checkout master | git checkout -b [template] | git add [file] | git commit -m ["临时分支文件提交"]
+4、将临时分支合并到主分支: git checkout master | git merge --no-ff -m ["合并临时分支到主分支"] [template]
+5、回到工作现场分支: git checkout [dev]
+6、回复工作现场: git stash pop(恢复同时将stash内容也删除) || git stash apply | git stash drop

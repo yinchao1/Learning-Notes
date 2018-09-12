@@ -1,0 +1,91 @@
+1、在工作空间创建项目文件夹，cd到文件夹目录
+
+2、安装create-react-app工具
+npm install -g create-react-app //检查安装版本号: create-react-app --version
+(1)可选择安装yarn
+npm install yarn
+
+
+3、创建项目
+create-react-app icms 
+
+
+4、用VS打开项目
+（1）查看package.json
+
+
+5、启动项目
+yarn start
+
+5、安装react-router axios less-loader
+yarn add react-router-dom axios less-loader
+
+6、暴露webpack配置文件
+yarn eject
+
+7、添加less模块
+yarn add less@^2.7.3
+
+8、修改webpack.config.dev.js，在css前添加以下配置
+		  // "postcss" loader applies autoprefixer to our CSS.
+          // "css" loader resolves paths in CSS and adds assets as dependencies.
+          // "style" loader turns CSS into JS modules that inject <style> tags.
+          // In production, we use a plugin to extract that CSS to a file, but
+          // in development "style" loader enables hot editing of CSS.
+          {
+            test: /\.less$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  // Necessary for external CSS imports to work
+                  // https://github.com/facebookincubator/create-react-app/issues/2677
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              },
+              {
+                loader: require.resolve('less-loader'),
+                options: {
+                  modules: false,
+                  modifyVars: {
+                    "@primary-color": "#f9c700"
+                  }
+                }
+              }
+            ],
+          },
+重启生效(yarn start)          
+
+
+9、安装antd
+yarn add antd
+
+
+10、安装按需加载样式文件babel-plugin-import
+yarn babel-plugin-import
+
+11、在webpack.config.dev.js中添加按需加载配置，找到test: /\.(js|jsx|mjs)$/,在options配置项添加字段:
+plugins:[['import',[{libraryName:'antd',style: true}]]],
+
+
+12、项目主题颜色:@primary-color
+
