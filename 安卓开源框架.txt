@@ -1,4 +1,4 @@
-https://github.com/Trinea/android-open-project 开源
+﻿https://github.com/Trinea/android-open-project 开源
 http://www.360doc.com/content/17/0510/16/41302481_652736249.shtml
 http://www.jianshu.com/p/05cb14b7776d  开源-动画效果
 
@@ -87,3 +87,6 @@ ECMAScript6
 https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git
 https://blog.csdn.net/free_wind22/article/details/50967723
 Git使用教程
+
+http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_two_async_operations.html
+redux使用说明
